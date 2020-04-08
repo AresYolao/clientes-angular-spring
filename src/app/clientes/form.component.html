@@ -1,0 +1,79 @@
+<div class="card border-0 bg-light mb-3">
+    <div class="card-header">
+        <h1>Registro de Cliente</h1>
+    </div>
+    <div class="card-body">
+        <form autocomplete="off" [formGroup]="forma">
+
+            <div>
+
+                <div class="form-group row">
+                    <div class="col">
+                        <label for="nombre">Nombre</label>
+                        <input id="nombre" class="form-control" type="text" placeholder="Nombre" formControlName="nombre" [class.is-invalid]="nombreNoValido">
+                        <small *ngIf="nombreNoValido" class="text-danger">Ingrese 5 letras</small>
+                    </div>
+
+                    <div class="col">
+
+                        <label for="apellidoP">Apellido Paterno</label>
+                        <input id="apellidoP" class="form-control" type="text" placeholder="Apellido Paterno" formControlName="apellidoPaterno" [class.is-invalid]="apellidoPaternoNoValido">
+                        <small *ngIf="apellidoPaternoNoValido" class="text-danger">Apellido es requerido</small>
+                    </div>
+
+                    <div class="col">
+
+                        <label for="apellidoM">Apellido Materno</label>
+                        <input id="apellidoM" class="form-control" type="text" placeholder="Apellido Materno" formControlName="apellidoMaterno" [class.is-invalid]="apellidoMaternoNoValido">
+                        <small *ngIf="apellidoMaternoNoValido" class="text-danger">Apellido es requerido</small>
+                    </div>
+
+                </div>
+
+
+
+
+                <div class="form-group row">
+                    <div class="col-4">
+                        <label for="correo" class=" col-form-label">Correo</label>
+
+                        <input id="correo" class="form-control" type="email" placeholder="Correo electrónico" formControlName="email" [class.is-invalid]="correoNoValido">
+                        <small *ngIf="correoNoValido" class="text-danger">Correo no válido</small>
+                    </div>
+
+                    <div class="col-4">
+                        <label for="telefono" class=" col-form-label">Teléfono</label>
+
+                        <input id="telefono" class="form-control" type="tel" placeholder="Número Telefónico" formControlName="telefono">
+
+                    </div>
+
+
+                </div>
+            </div>
+
+
+            <div class="form-group row justify-content-md-end">
+                <!-- <label class="col-2 col-form-label">&nbsp;</label> -->
+
+                <div class="input-group col-4">
+                    <button role="button" class="btn btn-outline-danger btn-block" (click)='cancelar()'>
+                        Cancelar
+                    </button>
+                </div>
+
+                <div class="input-group col-4">
+                    <button role="button" class="btn btn-outline-primary btn-block" (click)='guardar()' *ngIf="!cliente.idCliente else elseBlock">
+                        Guardar
+                        </button>
+                    <ng-template #elseBlock>
+                        <button role="button" class="btn btn-outline-primary btn-block" (click)='update()'>
+                        Actualizar
+                        </button>
+                    </ng-template>
+                </div>
+            </div>
+
+        </form>
+    </div>
+</div>

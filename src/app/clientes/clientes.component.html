@@ -1,0 +1,46 @@
+<div class="card border-0 mb-3">
+    <div class="card-header">
+        <h1>Listado de Clientes</h1>
+    </div>
+    <div class="card-body text-primary">
+
+        <div class="float-right mb-1">
+
+            <button class="btn btn-rounded btn-primary" type="button" [routerLink]="['/clientes/form']">Crear Cliente</button>
+        </div>
+
+
+        <table class="table table-bordered table-striped">
+            <thead class="thead-dark">
+                <tr>
+                    <th>ID</th>
+                    <th>Nombre</th>
+                    <th>Apellido Paterno</th>
+                    <th>Apellido Materno</th>
+                    <th>Estatus</th>
+                    <!-- <th>email</th> -->
+                    <th>Fecha Registro</th>
+                    <th>Opciones</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr *ngFor="let cliente of clientes">
+                    <td>{{cliente.idCliente}}</td>
+                    <td>{{cliente.nombre}}</td>
+                    <td>{{cliente.apellidoPaterno}}</td>
+                    <td>{{cliente.apellidoMaterno}}</td>
+                    <td>{{cliente.estatus ? 'Activo' : 'Inactivo'}}</td>
+                    <!-- <td>{{cliente.email}}</td> -->
+                    <td>{{cliente.fechaCreacion}}</td>
+                    <td>
+                        <button type="button" name="button" [routerLink]="['/clientes/form', cliente.idCliente ]" class="btn btn-outline-primary">Editar</button>
+                        <button type="button" name="button" class="btn ml-2" (click)="borrar(cliente)" [class.btn-outline-danger]="cliente.estatus" [class.btn-outline-success]="!cliente.estatus">{{cliente.estatus ? 'Borrar' : 'Activar'}}</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <paginator-nav *ngIf="paginador" [paginador]="paginador"></paginator-nav>
+    </div>
+</div>
