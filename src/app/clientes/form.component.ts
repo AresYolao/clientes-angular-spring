@@ -4,6 +4,8 @@ import { Cliente } from './cliente';
 import { ClienteService } from './cliente.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import swal from 'sweetalert2';
+import { CatalogoService } from '../services/catalogo.service';
+import { Estado } from './estado';
 
 @Component({
   selector: 'app-form',
@@ -14,16 +16,33 @@ export class FormComponent implements OnInit {
 
   forma: FormGroup;
   cliente: Cliente = new Cliente();
+  estados: Estado[];
   constructor(private fb: FormBuilder,
     private clienteService: ClienteService,
     private router: Router,
-    private activatedRoute: ActivatedRoute) { 
+    private activatedRoute: ActivatedRoute,
+    private catalogoService: CatalogoService) { 
      
   }
 
   ngOnInit() {
-    this.cargarCliente()
-    this.forma = this.crearFormulario()
+    this.cargarCliente();
+    this.forma = this.crearFormulario();
+
+    this.catalogoService.getEstados()
+    .subscribe(estados =>{
+      this.estados = estados._embedded.estados;
+      this.estados.unshift({
+        id: null,
+        idEstado: null,
+        nombre: 'Seleccione Estado'
+      })
+      // this.estados.unshift({
+      //   nombre: '[seleccione pais]',
+      //   codigo: ''
+      // })
+      console.log(this.estados);
+    });
 
   }
 
@@ -75,7 +94,12 @@ if(id){
         email: [this.cliente.email,[Validators.pattern('[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$'),Validators.required]],
         fechaCreacion: [this.cliente.fechaCreacion],
         telefono: [this.cliente.telefono],
-        estatus: [this.cliente.estatus]
+        estatus: [this.cliente.estatus],
+        dataEstado: this.fb.group({
+          // id: [this.cliente.dataEstado.idEstado],
+          idEstado: [this.cliente.dataEstado.idEstado]
+          // nombre: [this.cliente.dataEstado.nombre]
+        }),
   });
 
   }
@@ -96,8 +120,9 @@ if(id){
     
 
     //  this.cliente = this.forma.value;
-
+     
      this.cliente = new Cliente(this.forma.value);
+    //  this.cliente.dataEstado.id = this.forma.value.dataEstado;
      console.log(this.cliente);
     this.clienteService.createCliente(this.cliente).subscribe(
       cliente => {

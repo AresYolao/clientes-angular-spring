@@ -22,6 +22,7 @@ constructor(private http: HttpClient,
 createCliente(cliente: Cliente): Observable<Cliente>{
   cliente.fechaCreacion = new Date();
   cliente.estatus = true;
+  cliente.dataEstado.id = cliente.dataEstado.idEstado
   return this.http.post<Cliente>(this.url,cliente,{headers: this.httpHeader}).pipe(
     catchError(e=>{
       this.router.navigate(['/clientes'])
@@ -47,6 +48,8 @@ getCliente(id): Observable<any>{
 }
 
 update(cliente: Cliente): Observable<Cliente>{
+  console.log(cliente);
+  cliente.dataEstado.id = cliente.dataEstado.idEstado;
   return this.http.put<Cliente>(`${this.url}/${cliente.idCliente}`,cliente,{headers: this.httpHeader}).pipe(
     catchError(e=>{
       this.router.navigate(['/clientes'])

@@ -68,7 +68,8 @@ export class ClientesComponent implements OnInit {
       cancelButtonText: 'Cancelar'
     }).then((result) => {
       if (result.value) {
-        cliente.estatus = !cliente.estatus
+        cliente.estatus = !cliente.estatus;
+        // cliente.dataEstado.id = cliente.dataEstado.idEstado;
         this.clienteService.update(cliente).subscribe(
           cliente => 
                swal.fire(

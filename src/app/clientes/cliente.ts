@@ -1,3 +1,4 @@
+import { Estado } from './estado';
 export class Cliente {
 
     idCliente: number;
@@ -8,9 +9,12 @@ export class Cliente {
     telefono: number;
     email: string;
     estatus: boolean;
+    dataEstado: Estado;
 
 
     public constructor(init?: Partial<Cliente>) {
-         Object.assign(this, init);
+        this.dataEstado = new Estado(); 
+        Object.assign(this, init);
+         
     }
 }

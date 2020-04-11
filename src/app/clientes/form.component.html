@@ -48,6 +48,14 @@
 
                     </div>
 
+                    <div class="col-4" formGroupName="dataEstado">
+                        <label for="estados" class="col-2 col-form-label">Estado</label>
+
+                        <select id="estados" class="form-control" formControlName="idEstado"> 
+            <option *ngFor="let estado of estados" [value]="estado.idEstado">{{estado.nombre}}</option>
+        </select>
+                    </div>
+
 
                 </div>
             </div>
